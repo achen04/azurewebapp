@@ -2,11 +2,22 @@ import datetime
 
 #from django.contrib.auth.models import User
 from django.db import models
+from django.utils import timezone
 
 
-class LogEntry(models.Model):
+class Post(models.Model):
 	#user = models.ForeignKey(User)
-	content = models.TextField()
-	date = models.DateField(
-			default=datetime.date.today()
-	)
+	author = models.ForeignKey('auth.User')
+	title = models.CharField(max_length=200)
+	text = models.TextField()
+	created_date = models.DateTimeField(
+		default=timezone.now)
+	published_date = models.DateTimeField(
+		blank=True, null=True)
+
+	def publish(self):
+		self.published_date = timezone.now()
+		self.save()
+
+	def __str__(self):
+		return self.title
