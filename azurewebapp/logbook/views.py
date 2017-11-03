@@ -19,3 +19,4 @@ class HomePageView(View):
             </html>
         ''')
         return HttpResponse(response_text)
+
